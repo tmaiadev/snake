@@ -1,0 +1,1 @@
+export const isMobile = navigator.userAgent.match(/iPhone|iPad|iPod|Android/i);

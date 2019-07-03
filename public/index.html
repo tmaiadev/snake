@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="theme-color" content="#E7FBD9" />
+    <link href="https://fonts.googleapis.com/css?family=VT323&display=swap" rel="stylesheet">
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>Snake</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div class="game">
+      <div class="game__primary-screen">
+        <canvas id="canvas"></canvas>
+      </div>
+      <div class="game__secondary-screen">
+        <div class="game__display">
+          <div class="intro">
+            <div class="intro__hs">
+              Highest Score: <span class="intro__hs__number"></span>
+            </div>
+            <div class="intro__main">
+              <div class="intro__instructions"></div>
+            </div>
+          </div>
+          <div class="gameplay hide">
+            <div class="gameplay__status">
+              <div>
+                Score: <span class="gameplay__score">0</span><br />
+              </div>
+              <div>
+                Speed: <span class="gameplay__speed">1</span><br />
+              </div>
+              <div>
+                Direction: <span class="gameplay__direction">→</span><br />
+              </div>
+            </div>
+            <div class="gameplay__main">
+              <div class="gameplay__countdown">
+                3
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="game__footer">
+          Created by
+          <a
+            href="https://thallesmaia.com/about-me/"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Thalles Maia
+          </a>
+          <br />
+          This project is
+          <a
+            href="https://thallesmaia.com/about-me/"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Open Source
+          </a>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
