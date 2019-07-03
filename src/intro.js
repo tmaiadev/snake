@@ -16,7 +16,7 @@ export default () => {
     : 'Press ENTER to start';
   
   function goToMenu() {
-    $intro.classList.add('hide');
+    $intro.classList.add('hidden');
     Gameplay();
   }
 

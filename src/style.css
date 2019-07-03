@@ -99,12 +99,16 @@ a {
   overflow: hidden;
 }
 
+.gameplay__gameover {
+  text-align: center;
+}
+
 .gameplay__main {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.hide {
+.hidden {
   display: none;
 }

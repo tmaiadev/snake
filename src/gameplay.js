@@ -1,4 +1,5 @@
 import * as Controls from './controls';
+import { isMobile } from './constants';
 
 export default () => {
   const state = {
@@ -20,6 +21,8 @@ export default () => {
   const $speed = document.querySelector('.gameplay__speed');
   const $direction = document.querySelector('.gameplay__direction');
   const $countdown = document.querySelector('.gameplay__countdown');
+  const $gameover = document.querySelector('.gameplay__gameover');
+  const $gameoverInstructions = document.querySelector('.gameplay__gameover-instructions');
 
   const $canvas = document.getElementById('canvas');
   $canvas.width = 400;
@@ -61,6 +64,37 @@ export default () => {
   function queueDirection(dir) {
     if (state.direction[state.direction.length - 1] === dir) return;
     state.direction.push(dir);
+  }
+
+  function restart() {
+    // Hide gameover phrase
+    $gameover.classList.add('hidden');
+
+    // Show countdown
+    $countdown.classList.remove('hidden');
+
+    // reset state
+    state.snake = [
+      { y: 10, x: 10 },
+      { y: 10, x: 9 },
+      { y: 10, x: 8 },
+    ];
+    state.apple = { y: 10, x: 15 };
+    state.score = 0;
+    state.speed = 1;
+    state.countdown = 4;
+    state.gameover = false;
+    state.direction = ['RIGHT'];
+
+    // Render static snake
+    ctx.clearRect(0, 0, 400, 400);
+
+    state
+      .snake
+      .forEach(({ x, y }) => draw(x, y));
+
+    // Start countdown
+    startCountDown();
   }
 
   function update() {
@@ -125,12 +159,14 @@ export default () => {
 
     state.gameover = collidedWall || collidedSnake;
 
-    state.snake = [
-      head,
-      ...state
-        .snake
-        .slice(0, state.snake.length - (appleEaten ? 0 : 1)),
-    ];
+    if (state.gameover === false) {
+      state.snake = [
+        head,
+        ...state
+          .snake
+          .slice(0, state.snake.length - (appleEaten ? 0 : 1)),
+      ];
+    }
 
     if (appleEaten) {
       const available = [];
@@ -162,6 +198,12 @@ export default () => {
             draw(x, y);
         }
       }
+
+      // Show gameover message
+      $gameover.classList.remove('hidden');
+
+      // On click enter, reset state
+      Controls.listenOnce(Controls.KEYS.ENTER, restart);
     } else {
       // render snake
       state
@@ -181,7 +223,7 @@ export default () => {
     state.countdown -= 1;
 
     if (state.countdown === 0) {
-      $countdown.classList.add('hide');
+      $countdown.classList.add('hidden');
       render();
       return;
     }
@@ -210,19 +252,13 @@ export default () => {
     $direction.innerHTML = '↓';
   });
 
-  Controls.listen(Controls.KEYS.ENTER, () => {
-    if (state.gameover !== true) return;
-    state.gameover = false;
-    state.snake = [
-      { y: 10, x: 10 },
-      { y: 10, x: 9 },
-      { y: 10, x: 8 },
-    ];
-    state.score = 0;
-  });
-
   // Show gameplay screen
-  $gameplay.classList.remove('hide');
+  $gameplay.classList.remove('hidden');
+  
+  // Write gameover instructions
+  $gameoverInstructions.innerHTML = isMobile
+    ? 'Tap to restart'
+    : 'Press ENTER to restart';
 
   // Start count down
   setTimeout(startCountDown, 1000);
