@@ -40,4 +40,10 @@ function onResize() {
 window.addEventListener('load', onResize);
 window.addEventListener('resize', onResize);
 
+// Hack to prevent iOS from bouncing
+// when swiping up and down
+document.addEventListener('touchmove', (evt) => {
+  evt.preventDefault();
+}, { passive: false });
+
 serviceWorker.register();
