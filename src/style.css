@@ -16,6 +16,13 @@ body {
   color: var(--black);
   background-color: #E7FBD9;
   font-family: 'VT323', monospace;
+  font-size: 2vh;
+}
+
+@media (orientation: landscape) {
+  body {
+    font-size: 2vw;
+  }
 }
 
 a {
@@ -106,14 +113,6 @@ a {
 
 .gameplay__status:nth-child(1) {
   text-align: center;
-}
-
-.gameplay__direction {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  line-height: 16px;
-  overflow: hidden;
 }
 
 .gameplay__gameover {

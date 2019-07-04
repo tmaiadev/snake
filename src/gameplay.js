@@ -240,22 +240,22 @@ export default () => {
 
   Controls.listen(Controls.KEYS.RIGHT, () => {
     queueDirection('RIGHT');
-    $direction.innerHTML = '→';
+    $direction.innerHTML = 'R';
   });
 
   Controls.listen(Controls.KEYS.LEFT, () => {
     queueDirection('LEFT');
-    $direction.innerHTML = '←';
+    $direction.innerHTML = 'L';
   });
 
   Controls.listen(Controls.KEYS.UP, () => {
     queueDirection('UP');
-    $direction.innerHTML =  '↑';
+    $direction.innerHTML =  'U';
   });
 
   Controls.listen(Controls.KEYS.DOWN, () => {
     queueDirection('DOWN');
-    $direction.innerHTML = '↓';
+    $direction.innerHTML = 'D';
   });
 
   // Show gameplay screen
