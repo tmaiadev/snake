@@ -13,7 +13,8 @@ export default () => {
     speed: 1,
     countdown: 3,
     gameover: false,
-    direction: ['RIGHT'],
+    directionQueue: [],
+    direction: 'RIGHT',
   }
 
   const $gameplay = document.querySelector('.gameplay');
@@ -57,13 +58,13 @@ export default () => {
     const hs = parseInt(localStorage.hs) || 0;
     state.score += 1;
     if (state.score > hs) localStorage.setItem('hs', state.score);
-    if (state.score % 5 === 0) updateSpeed();
+    if (state.score % 3 === 0) updateSpeed();
     $score.innerHTML = state.score;
   }
 
   function queueDirection(dir) {
-    if (state.direction[state.direction.length - 1] === dir) return;
-    state.direction.push(dir);
+    if (state.directionQueue[state.directionQueue.length - 1] === dir) return;
+    state.directionQueue.push(dir);
   }
 
   function restart() {
@@ -73,7 +74,11 @@ export default () => {
     // Show countdown
     $countdown.classList.remove('hidden');
 
-    // reset state
+    // Reset score
+    $score.innerHTML = '0';
+    $speed.innerHTML = '1';
+
+    // Reset state
     state.snake = [
       { y: 10, x: 10 },
       { y: 10, x: 9 },
@@ -84,7 +89,8 @@ export default () => {
     state.speed = 1;
     state.countdown = 4;
     state.gameover = false;
-    state.direction = ['RIGHT'];
+    state.directionQueue = [];
+    state.direction = 'RIGHT';
 
     // Render static snake
     ctx.clearRect(0, 0, 400, 400);
@@ -102,9 +108,10 @@ export default () => {
     const neck = state.snake[1];
     const { apple } = state;
 
-    const direction = state.direction.length > 1
-      ? state.direction.splice(0, 1)[0]
-      : state.direction[0];
+    if (state.directionQueue.length > 0)
+      state.direction = state.directionQueue.splice(0, 1)[0];
+
+    const { direction } = state;
 
     if (direction === 'RIGHT') {
       head.x += 1;
@@ -128,7 +135,6 @@ export default () => {
 
     if (direction === 'UP') {
       head.y -= 1;
-      if (head.y < 0) head.y = 19;
 
       // Ignore moving up if
       // snake is moving down
@@ -178,7 +184,7 @@ export default () => {
       }
 
       state
-        .apple = available[Math.ceil(Math.random() * available.length)];
+        .apple = available[Math.floor(Math.random() * available.length)];
 
       updateScore();
     }
@@ -224,7 +230,7 @@ export default () => {
 
     if (state.countdown === 0) {
       $countdown.classList.add('hidden');
-      render();
+      update();
       return;
     }
 
