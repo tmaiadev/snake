@@ -30,6 +30,12 @@ export default () => {
   $canvas.height = 400;
   const ctx = $canvas.getContext('2d');
 
+  function vibrate(ms) {
+    if (navigator.vibrate) {
+      navigator.vibrate(ms);
+    }
+  }
+
   function draw(x, y, grey = false) {
     ctx.fillStyle = grey
       ? '#82937F'
@@ -172,6 +178,8 @@ export default () => {
           .snake
           .slice(0, state.snake.length - (appleEaten ? 0 : 1)),
       ];
+    } else {
+      vibrate(1000);
     }
 
     if (appleEaten) {
@@ -185,6 +193,8 @@ export default () => {
 
       state
         .apple = available[Math.floor(Math.random() * available.length)];
+
+      vibrate(100);
 
       updateScore();
     }
